@@ -110,5 +110,5 @@ def encode_word(word: str) -> str:
 def encode_prompt(text: str) -> tuple[str, str]:
 	words = text.split()
 	first = encode_word(words[0])
-	last = encode_word(words[-1])
+	last = encode_word(words[-1]) if len(words) >= 2 else WILDCARD
 	return first, last
