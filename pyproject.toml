@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "markovify",
     "sqlalchemy>=2.0.38",
     "sqlmodel>=0.0.22",
     "tqdm>=4.67.1",
@@ -14,3 +15,6 @@ dependencies = [
 dev = [
     "ruff>=0.9.5",
 ]
+
+[tool.uv.sources]
+markovify = { git = "https://github.com/garlic-os/markovify" }

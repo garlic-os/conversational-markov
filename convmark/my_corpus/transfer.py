@@ -2,7 +2,7 @@ import sqlalchemy as sa
 import sqlmodel as sm
 from tqdm import tqdm
 
-from convmark.globals import GARLIC_OS, OOER_GENERAL
+from convmark.my_corpus.globals import GARLIC_OS, OOER_GENERAL
 from convmark.my_corpus.models import Message
 
 

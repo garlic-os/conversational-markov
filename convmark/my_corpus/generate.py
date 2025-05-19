@@ -3,7 +3,7 @@ from pathlib import Path
 
 import sqlalchemy as sa
 import sqlmodel as sm
-from markovify import markovify
+import markovify
 from tqdm import tqdm
 
 import convmark.convmark as c
