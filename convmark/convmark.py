@@ -78,6 +78,9 @@ class ConvMark:
 		if state is not None:
 			return state
 		# Try permutations
+		state = self.resolve_wildcards((last, first, RESPONSE))
+		if state is not None:
+			return state
 		state = self.resolve_wildcards((WILDCARD, first, RESPONSE))
 		if state is not None:
 			return state
