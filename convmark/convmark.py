@@ -1,7 +1,7 @@
 import random
 from typing import Literal, cast
 
-from ..markovify import markovify
+from markovify import markovify
 
 
 BEGIN = markovify.text.BEGIN

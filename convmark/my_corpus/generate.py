@@ -3,13 +3,12 @@ from pathlib import Path
 
 import sqlalchemy as sa
 import sqlmodel as sm
+from markovify import markovify
 from tqdm import tqdm
 
 import convmark.convmark as c
 from convmark.globals import GARLIC_OS, OOER_GENERAL
 from convmark.my_corpus.models import Message
-
-from ...markovify import markovify
 
 
 DB_URL = (
