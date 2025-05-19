@@ -1,8 +1,9 @@
 [project]
 name = "conversational-markov"
 version = "0.1.0"
-description = "Add your description here"
+description = "Markov chain generator with rudimentary prompt response"
 readme = "README.md"
+license-files = ["LICENSE"]
 requires-python = ">=3.13"
 dependencies = [
     "markovify",
@@ -12,9 +13,11 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = [
-    "ruff>=0.9.5",
-]
+dev = ["ruff>=0.9.5"]
 
 [tool.uv.sources]
 markovify = { git = "https://github.com/garlic-os/markovify" }
+
+
+[project.urls]
+Homepage = "https://github.com/garlic-os/conversational-markov"
