@@ -1,4 +1,6 @@
 .vscode/
+convmark.json
+convmark.sqlite3
 
 # markovify_typed package from https://github.com/jsvine/markovify/pull/189
 markovify_typed/
