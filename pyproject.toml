@@ -1,6 +1,6 @@
 [project]
 name = "conversational-markov"
-version = "0.1.0"
+version = "0.1.1"
 description = "Markov chain generator with rudimentary prompt response"
 readme = "README.md"
 license-files = ["LICENSE"]
