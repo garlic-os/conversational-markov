@@ -7,7 +7,7 @@ import markovify
 from tqdm import tqdm
 
 import convmark.convmark as c
-from convmark.globals import GARLIC_OS, OOER_GENERAL
+from convmark.my_corpus.globals import GARLIC_OS, OOER_GENERAL
 from convmark.my_corpus.models import Message
 
 
