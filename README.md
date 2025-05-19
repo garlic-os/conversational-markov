@@ -1,8 +1,9 @@
 # Conversational Markov
 
 LLMs don't normally sound like they're talking to you. The LLM in its most 
-state simply continues the text it's given. LLMs sound like they're talking to
-you by being set up to always complete one side of a conversation.
+basic state simply continues the text it's given. LLMs sound like they're
+talking to you when they're set up to always complete one side of a
+conversation.
 
 Technically, there's nothing stopping you from making a Markov chain generator
 do this, too. Train it on prompts and responses delineated by a sentinel token,
