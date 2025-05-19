@@ -12,10 +12,10 @@ from convmark.my_corpus.models import Message
 
 
 DB_URL = (
-	"sqlite:////G:/Garlic/Documents/Code/Discord Bots/"
-	"conversational-markov/db.sqlite3"
+	"sqlite:///G:/Garlic/Documents/Code/Python/"
+	"conversational-markov/convmark.sqlite3"
 )
-SEQUENCES_PATH = Path("convmark/sequences")
+SEQUENCES_PATH = Path("convmark/my_corpus/sequences")
 
 
 def remove_log(corpus: list[list[str]], state: markovify.chain.State) -> None:
@@ -34,20 +34,26 @@ def insert_sequence(corpus: list[list[str]], sequence_path: Path) -> None:
 			prompt = c.encode_prompt(line)
 
 
+def try_del_val(corpus: list[list[str]], val: list[str]) -> None:
+	try:
+		del corpus[corpus.index(val)]
+	except ValueError:
+		pass
+
+
 def perform_manual_corrections(corpus: list[list[str]]) -> None:
 	# in place
-	del corpus[corpus.index(["plants", c.RESPONSE, "shrimp"])]
-	del corpus[corpus.index(["tendrils", c.RESPONSE, "plants"])]
-	del corpus[corpus.index(["shrimp", c.RESPONSE, "tendrils"])]
-	del corpus[corpus.index(["🌱", c.RESPONSE, "🦐"])]
-	del corpus[
-		corpus.index(["<:tendrils:585579718737395732>", c.RESPONSE, "🌱"])
-	]
-	del corpus[
-		corpus.index(["🦐", c.RESPONSE, "<:tendrils:585579718737395732>"])
-	]
+	try_del_val(corpus, ["plants", c.WILDCARD, c.RESPONSE, "shrimp"])
+	try_del_val(corpus, ["tendrils", c.WILDCARD, c.RESPONSE, "plants"])
+	try_del_val(corpus, ["shrimp", c.WILDCARD, c.RESPONSE, "tendrils"])
+	try_del_val(corpus, ["🌱", c.WILDCARD, c.RESPONSE, "🦐"])
+	try_del_val(corpus, ["<:tendrils:585579718737395732>", c.WILDCARD, c.RESPONSE, "🌱"])
+	try_del_val(corpus, ["🦐", c.WILDCARD, c.RESPONSE, "<:tendrils:585579718737395732>"])
 	for path in SEQUENCES_PATH.glob("*.txt"):
 		insert_sequence(corpus, path)
+	corpus.append(["some", c.WILDCARD, c.RESPONSE, "body"])
+	corpus.append(["body", c.WILDCARD, c.RESPONSE, "once"])
+	corpus.append(["once", c.WILDCARD, c.RESPONSE, "told me the world was gonna roll me"])
 
 
 def generate_corpus() -> list[list[str]]:
@@ -116,13 +122,20 @@ def generate_corpus() -> list[list[str]]:
 
 
 def main() -> None:
-	corpus = generate_corpus()
-	perform_manual_corrections(corpus)
-	with open("ConvMark.json", "w") as fout:
-		json.dump(corpus, fout)
+	# corpus = generate_corpus()
+	# with open("convmark.json", "w") as fout:
+	# 	json.dump(corpus, fout)
 
-	# with open("ConvMark.json") as fin:
+	# with open("convmark.json") as fin:
 	# 	corpus: list[list[str]] = json.load(fin)
+
+	# perform_manual_corrections(corpus)
+
+	# with open("convmark.json", "w") as fout:
+	# 	json.dump(corpus, fout)
+
+	with open("convmark.json") as fin:
+		corpus: list[list[str]] = json.load(fin)
 
 	model = c.ConvMark(corpus)
 
