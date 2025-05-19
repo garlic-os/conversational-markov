@@ -27,13 +27,16 @@ class ConvMark:
 
 	def respond(self, input_message: str) -> str:
 		init_state = self.make_init_state(input_message)
-		result = self.markov.make_sentence(init_state=init_state, test_output=False)
+		result = self.markov.make_sentence(
+			init_state=init_state,
+			test_output=False,
+		)
 		if result is None:
 			return "Error"
-		init_length = 0
+		preamble_length = 0
 		for token in init_state:
-			init_length += len(token) + 1
-		return result[init_length:]
+			preamble_length += len(token) + 1
+		return result[preamble_length:]
 
 	def resolve_wildcards(
 		self,
