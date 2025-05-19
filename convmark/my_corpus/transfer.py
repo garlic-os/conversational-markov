@@ -1,5 +1,6 @@
 import sqlalchemy as sa
 import sqlmodel as sm
+from sqlalchemy.dialects.sqlite import insert
 from tqdm import tqdm
 
 from convmark.my_corpus.globals import GARLIC_OS, OOER_GENERAL
@@ -13,11 +14,14 @@ DEST_DB_URL = "sqlite:////home/garlic/convmark.sqlite3"
 def main() -> list[list[str]]:
 	corpus: list[list[str]] = []
 
+	engine = sm.create_engine(DEST_DB_URL)
+	sm.SQLModel.metadata.create_all(engine)
+
 	# Get my messages from Parrot's database and convert them to a training set
 	# for the conversational model
 	with (
 		sm.Session(sm.create_engine(SOURCE_DB_URL)) as source,
-		sm.Session(sm.create_engine(DEST_DB_URL)) as dest,
+		sm.Session(engine) as dest,
 	):
 		# "Number of my messages in /r/Ooer general"
 		stmt_count = sa.select(sa.func.count(sm.col(Message.id))).where(
@@ -31,11 +35,13 @@ def main() -> list[list[str]]:
 			Message.channel_id == OOER_GENERAL,
 		)
 		successes = 0
-		for i, message_garlic in enumerate(tqdm(
-			source.exec(stmt_garlic),
-			desc="Messages processed",
-			total=garlic_corpus_size,
-		)):
+		for i, message_garlic in enumerate(
+			tqdm(
+				source.exec(stmt_garlic),
+				desc="Messages processed",
+				total=garlic_corpus_size,
+			)
+		):
 			if message_garlic is None:
 				print("why is it none")
 				continue
@@ -61,8 +67,29 @@ def main() -> list[list[str]]:
 				print(message_garlic, "how is the prev message empty")
 				continue
 
-			dest.add(message_garlic)
-			dest.add(message_prev)
+			dest.execute(
+				insert(Message)
+				.values(
+					id=message_garlic.id,
+					author_id=message_garlic.author_id,
+					channel_id=message_garlic.channel_id,
+					content=message_garlic.content,
+					guild_id=message_garlic.guild_id,
+				)
+				.on_conflict_do_nothing(index_elements=["id"])
+			)
+			dest.execute(
+				insert(Message)
+				.values(
+					id=message_prev.id,
+					author_id=message_prev.author_id,
+					channel_id=message_prev.channel_id,
+					content=message_prev.content,
+					guild_id=message_prev.guild_id,
+				)
+				.on_conflict_do_nothing(index_elements=["id"])
+			)
+
 			if i % 1000 == 0:
 				dest.commit()
 
