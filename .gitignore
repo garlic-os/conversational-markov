@@ -1,3 +1,8 @@
+.vscode/
+
+# markovify_typed package from https://github.com/jsvine/markovify/pull/189
+markovify_typed/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

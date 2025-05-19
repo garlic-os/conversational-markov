@@ -1,0 +1,3 @@
+[submodule "markovify"]
+	path = markovify
+	url = git@github.com:garlic-os/markovify.git
