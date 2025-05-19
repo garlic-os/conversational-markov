@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
+import markovify
 import sqlalchemy as sa
 import sqlmodel as sm
-import markovify
 from tqdm import tqdm
 
 import convmark.convmark as c
@@ -12,7 +12,7 @@ from convmark.my_corpus.models import Message
 
 
 DB_URL = (
-	"sqlite:///G:/Garlic/Documents/Code/Discord Bots/"
+	"sqlite:////G:/Garlic/Documents/Code/Discord Bots/"
 	"conversational-markov/db.sqlite3"
 )
 SEQUENCES_PATH = Path("convmark/sequences")

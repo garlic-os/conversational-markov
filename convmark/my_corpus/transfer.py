@@ -6,8 +6,8 @@ from convmark.my_corpus.globals import GARLIC_OS, OOER_GENERAL
 from convmark.my_corpus.models import Message
 
 
-SOURCE_DB_URL = "sqlite:///home/garlic/parrot/parrot.sqlite3"
-DEST_DB_URL = "sqlite:///home/garlic/convmark.sqlite3"
+SOURCE_DB_URL = "sqlite:////home/garlic/parrot/parrot.sqlite3"
+DEST_DB_URL = "sqlite:////home/garlic/convmark.sqlite3"
 
 
 def main() -> list[list[str]]:
